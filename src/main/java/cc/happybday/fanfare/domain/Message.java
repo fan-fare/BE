@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Entity
 @Setter @Getter
 public class Message {
@@ -26,6 +24,6 @@ public class Message {
     private String nickname;
 
     @Enumerated(value = EnumType.STRING)
-    private Color color;
+    private CandleColor candleColor;
 
 }

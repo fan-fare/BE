@@ -1,6 +1,6 @@
 package cc.happybday.fanfare.domain;
 
-public enum Color {
+public enum CandleColor {
     RED,
     LIGHTPINK,
     ORANGE,
