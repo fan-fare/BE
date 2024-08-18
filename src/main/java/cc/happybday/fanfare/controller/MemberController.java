@@ -13,9 +13,9 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/members/check-nickname")
-    public BaseResponse<Boolean> checkNickname(@RequestParam String nickname) {
-        boolean isTaken = memberService.isNicknameTaken(nickname);
+    @GetMapping("/members/check-userid")
+    public BaseResponse<Boolean> checkNickname(@RequestParam String userId) {
+        boolean isTaken = memberService.isUserIdTaken(userId);
         return new BaseResponse<>(isTaken, BaseResponseCode.SUCCESS);
     }
 

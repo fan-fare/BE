@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static cc.happybday.fanfare.common.response.ErrorResponseCode.DUPLICATE_NICKNAME;
+import static cc.happybday.fanfare.common.response.ErrorResponseCode.DUPLICATE_USERID;
 
 @Service
 @Transactional
@@ -19,15 +19,15 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    // 닉네임 중복 확인
-    public boolean isNicknameTaken(String nickname) {
-        return memberRepository.findByNickname(nickname).isPresent();
+    // 아이디 중복 확인
+    public boolean isUserIdTaken(String nickname) {
+        return memberRepository.findByUserId(nickname).isPresent();
     }
 
     // 회원가입
     public Long signUp(SignUpRequestDto request){
-        if (isNicknameTaken(request.getNickname())) {
-            throw new BusinessException(DUPLICATE_NICKNAME);
+        if (isUserIdTaken(request.getUserId())) {
+            throw new BusinessException(DUPLICATE_USERID);
         }
 
         Member member = new Member();
