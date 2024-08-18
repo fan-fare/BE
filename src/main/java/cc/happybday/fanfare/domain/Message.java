@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class Message {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
