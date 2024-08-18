@@ -27,8 +27,4 @@ public class Member {
 
     private LocalDate birthDay;
 
-    @OneToMany(mappedBy = "member")
-    private ArrayList<Message> message = new ArrayList<>();
-
-
 }
