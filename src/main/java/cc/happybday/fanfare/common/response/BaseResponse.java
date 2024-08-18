@@ -4,27 +4,18 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@ToString
 public class BaseResponse<T> {
 
     private final int status;
     private final String message;
     private final String code;
-    private T data;
+    private final T data;
 
-    // 요청 성공 시
     public BaseResponse(T data,BaseResponseCode baseResponseCode) {
         this.status = baseResponseCode.getStatus();
         this.message = baseResponseCode.getMessage();
         this.code = baseResponseCode.getCode();
         this.data = data;
-    }
-
-    // 요청 실패 시
-    public BaseResponse(BaseResponseCode baseResponseCode) {
-        this.status = baseResponseCode.getStatus();
-        this.message = baseResponseCode.getMessage();
-        this.code = baseResponseCode.getCode();
     }
 
 }
