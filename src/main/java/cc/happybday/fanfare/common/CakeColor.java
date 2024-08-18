@@ -1,4 +1,4 @@
-package cc.happybday.fanfare.service;
+package cc.happybday.fanfare.common;
 
 public enum CakeColor {
     // 임시
