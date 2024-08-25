@@ -29,6 +29,7 @@ public class MemberService {
     // 회원가입
     public Long signUp(SignUpRequestDto request){
         if (!checkUsernameAvailability(request.getUserId())) {
+            log.info("회원가입 실패 (중복된 아이디) : {}", request.getUserId());
             throw new BusinessException(DUPLICATE_USERID);
         }
 
@@ -39,7 +40,8 @@ public class MemberService {
         member.setBirthDay(request.getBirthDay());
 
         Member savedMember = memberRepository.save(member);
-        log.info("회원가입 완료: {}", savedMember);
+
+        log.info("회원가입 완료: {}", savedMember.getUserId());
 
         return savedMember.getId();
     }
