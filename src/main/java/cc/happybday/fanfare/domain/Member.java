@@ -22,7 +22,7 @@ public class Member {
     @Column(length = 20)
     private String nickname;
 
-    @Column(length = 20)
+    @Column(length = 255)
     private String password;
 
     private LocalDate birthDay;

@@ -6,6 +6,7 @@ import cc.happybday.fanfare.dto.SignUpRequestDto;
 import cc.happybday.fanfare.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import static cc.happybday.fanfare.common.response.ErrorResponseCode.DUPLICATE_U
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 아이디 중복 확인
     public boolean checkUsernameAvailability(String userId) {
@@ -33,7 +35,7 @@ public class MemberService {
         Member member = new Member();
         member.setUserId(request.getUserId());
         member.setNickname(request.getNickname());
-        member.setPassword(request.getPassword());
+        member.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
         member.setBirthDay(request.getBirthDay());
 
         Member savedMember = memberRepository.save(member);
