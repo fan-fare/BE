@@ -13,10 +13,10 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/members/check-userid")
+    @GetMapping("/check-userid")
     public BaseResponse<Boolean> checkNickname(@RequestParam String userId) {
-        boolean isTaken = memberService.isUserIdTaken(userId);
-        return new BaseResponse<>(isTaken, BaseResponseCode.SUCCESS);
+        boolean isAvailable = memberService.checkUsernameAvailability(userId); // 가능하면 true
+        return new BaseResponse<>(isAvailable, BaseResponseCode.SUCCESS);
     }
 
     @PostMapping("/signup")

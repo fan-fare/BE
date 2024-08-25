@@ -20,13 +20,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     // 아이디 중복 확인
-    public boolean isUserIdTaken(String nickname) {
-        return memberRepository.findByUserId(nickname).isPresent();
+    public boolean checkUsernameAvailability(String userId) {
+        return memberRepository.findByUserId(userId).isEmpty();
     }
 
     // 회원가입
     public Long signUp(SignUpRequestDto request){
-        if (isUserIdTaken(request.getUserId())) {
+        if (checkUsernameAvailability(request.getUserId())) {
             throw new BusinessException(DUPLICATE_USERID);
         }
 
