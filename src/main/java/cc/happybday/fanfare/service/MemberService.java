@@ -28,7 +28,7 @@ public class MemberService {
 
     // 회원가입
     public Long signUp(SignUpRequestDto request){
-        if (checkUsernameAvailability(request.getUserId())) {
+        if (!checkUsernameAvailability(request.getUserId())) {
             throw new BusinessException(DUPLICATE_USERID);
         }
 
