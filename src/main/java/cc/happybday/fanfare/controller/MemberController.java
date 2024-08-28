@@ -2,7 +2,7 @@ package cc.happybday.fanfare.controller;
 
 import cc.happybday.fanfare.common.response.BaseResponse;
 import cc.happybday.fanfare.common.response.BaseResponseCode;
-import cc.happybday.fanfare.dto.SignUpRequestDto;
+import cc.happybday.fanfare.dto.member.SignUpRequestDto;
 import cc.happybday.fanfare.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

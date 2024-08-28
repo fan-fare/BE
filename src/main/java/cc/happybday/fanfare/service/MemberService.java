@@ -2,7 +2,7 @@ package cc.happybday.fanfare.service;
 
 import cc.happybday.fanfare.common.exception.BusinessException;
 import cc.happybday.fanfare.domain.Member;
-import cc.happybday.fanfare.dto.SignUpRequestDto;
+import cc.happybday.fanfare.dto.member.SignUpRequestDto;
 import cc.happybday.fanfare.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,20 +22,20 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 아이디 중복 확인
-    public boolean isMemberIdExists(String id) {
-        return memberRepository.findByMemberId(id).isPresent();
+    public boolean isMemberIdExists(String username) {
+        return memberRepository.findByUsername(username).isPresent();
     }
 
     // 회원가입
     public Long signUp(SignUpRequestDto request){
 
-        if (isMemberIdExists(request.getMemberId())) {
-            log.info("회원가입 실패 (중복된 아이디) : {}", request.getMemberId());
+        if (isMemberIdExists(request.getUsername())) {
+            log.info("회원가입 실패 (중복된 아이디) : {}", request.getUsername());
             throw new BusinessException(DUPLICATE_MEMBER_ID);
         }
 
         Member member = Member.builder()
-                .memberId(request.getMemberId())
+                .username(request.getUsername())
                 .nickname(request.getNickname())
                 .password(bCryptPasswordEncoder.encode(request.getPassword()))
                 .birthDay(request.getBirthDay())
@@ -43,7 +43,7 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
 
-        log.info("회원가입 완료: {}", savedMember.getMemberId());
+        log.info("회원가입 완료: {}", savedMember.getUsername());
 
         return savedMember.getId();
     }

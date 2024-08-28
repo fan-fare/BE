@@ -1,6 +1,5 @@
 package cc.happybday.fanfare.domain;
 
-import cc.happybday.fanfare.common.CakeColor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

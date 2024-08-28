@@ -16,7 +16,7 @@ public class Member {
     private Long id;
 
     @Column(length = 20)
-    private String memberId;
+    private String username;
 
     @Column(length = 20)
     private String nickname;

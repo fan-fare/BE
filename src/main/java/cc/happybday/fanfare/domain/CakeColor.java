@@ -1,4 +1,4 @@
-package cc.happybday.fanfare.common;
+package cc.happybday.fanfare.domain;
 
 public enum CakeColor {
     CAKE_COLOR_1,
