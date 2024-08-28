@@ -28,16 +28,18 @@ public class MemberService {
 
     // 회원가입
     public Long signUp(SignUpRequestDto request){
+
         if (isMemberIdExists(request.getMemberId())) {
             log.info("회원가입 실패 (중복된 아이디) : {}", request.getMemberId());
             throw new BusinessException(DUPLICATE_MEMBER_ID);
         }
 
-        Member member = new Member();
-        member.setMemberId(request.getMemberId());
-        member.setNickname(request.getNickname());
-        member.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
-        member.setBirthDay(request.getBirthDay());
+        Member member = Member.builder()
+                .memberId(request.getMemberId())
+                .nickname(request.getNickname())
+                .password(bCryptPasswordEncoder.encode(request.getPassword()))
+                .birthDay(request.getBirthDay())
+                .build();
 
         Member savedMember = memberRepository.save(member);
 
