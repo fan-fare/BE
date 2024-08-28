@@ -22,14 +22,14 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 아이디 중복 확인
-    public boolean isMemberIdExists(String username) {
+    public boolean isUsernameExists(String username) {
         return memberRepository.findByUsername(username).isPresent();
     }
 
     // 회원가입
     public Long signUp(SignUpRequestDto request){
 
-        if (isMemberIdExists(request.getUsername())) {
+        if (isUsernameExists(request.getUsername())) {
             log.info("회원가입 실패 (중복된 아이디) : {}", request.getUsername());
             throw new BusinessException(DUPLICATE_MEMBER_ID);
         }

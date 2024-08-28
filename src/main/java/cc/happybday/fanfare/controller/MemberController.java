@@ -14,8 +14,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/members/exists")
-    public BaseResponse<Boolean> checkMemberIdExists(@RequestParam String id) {
-        boolean isExists = memberService.isMemberIdExists(id); // 존재하면 true
+    public BaseResponse<Boolean> checkUsernameExists(@RequestParam String id) {
+        boolean isExists = memberService.isUsernameExists(id); // 존재하면 true
         return new BaseResponse<>(isExists, BaseResponseCode.SUCCESS);
     }
 
