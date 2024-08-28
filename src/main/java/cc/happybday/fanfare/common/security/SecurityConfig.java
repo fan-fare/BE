@@ -32,7 +32,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/signup", "/check-userid", "/").permitAll() // 모든 사용자 허용
+                        .requestMatchers("/login", "/signup", "/members/exists", "/").permitAll() // 모든 사용자 허용
                         .anyRequest().authenticated()); // 로그인한 사용자만 허용
 
         http

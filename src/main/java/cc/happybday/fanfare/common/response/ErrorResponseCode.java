@@ -12,7 +12,7 @@ public enum ErrorResponseCode {
     INTERNAL_SERVER_ERROR("F03", "예기치 못한 서버 에러가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR.value()),
 
     // Member
-    DUPLICATE_USERID("F04", "이미 존재하는 아이디입니다.", HttpStatus.BAD_REQUEST.value());
+    DUPLICATE_MEMBER_ID("F04", "이미 존재하는 아이디입니다.", HttpStatus.BAD_REQUEST.value());
 
 
     private final String code;

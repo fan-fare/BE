@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static cc.happybday.fanfare.common.response.ErrorResponseCode.DUPLICATE_USERID;
+import static cc.happybday.fanfare.common.response.ErrorResponseCode.DUPLICATE_MEMBER_ID;
 
 @Service
 @Transactional
@@ -22,26 +22,26 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 아이디 중복 확인
-    public boolean checkUsernameAvailability(String userId) {
-        return memberRepository.findByUserId(userId).isEmpty();
+    public boolean isMemberIdExists(String id) {
+        return memberRepository.findByMemberId(id).isPresent();
     }
 
     // 회원가입
     public Long signUp(SignUpRequestDto request){
-        if (!checkUsernameAvailability(request.getUserId())) {
-            log.info("회원가입 실패 (중복된 아이디) : {}", request.getUserId());
-            throw new BusinessException(DUPLICATE_USERID);
+        if (isMemberIdExists(request.getMemberId())) {
+            log.info("회원가입 실패 (중복된 아이디) : {}", request.getMemberId());
+            throw new BusinessException(DUPLICATE_MEMBER_ID);
         }
 
         Member member = new Member();
-        member.setUserId(request.getUserId());
+        member.setMemberId(request.getMemberId());
         member.setNickname(request.getNickname());
         member.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
         member.setBirthDay(request.getBirthDay());
 
         Member savedMember = memberRepository.save(member);
 
-        log.info("회원가입 완료: {}", savedMember.getUserId());
+        log.info("회원가입 완료: {}", savedMember.getMemberId());
 
         return savedMember.getId();
     }

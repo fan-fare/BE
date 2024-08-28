@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Entity
 @Setter @Getter
@@ -17,7 +16,7 @@ public class Member {
     private Long id;
 
     @Column(length = 20)
-    private String userId;
+    private String memberId;
 
     @Column(length = 20)
     private String nickname;

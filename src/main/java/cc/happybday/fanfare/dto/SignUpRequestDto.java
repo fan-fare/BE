@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class SignUpRequestDto {
-    private String userId;
+    private String memberId;
     private String nickname;
     private String password;
     private LocalDate birthDay;
