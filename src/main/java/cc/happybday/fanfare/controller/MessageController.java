@@ -2,7 +2,9 @@ package cc.happybday.fanfare.controller;
 
 import cc.happybday.fanfare.common.response.BaseResponse;
 import cc.happybday.fanfare.common.response.BaseResponseCode;
+import cc.happybday.fanfare.domain.Message;
 import cc.happybday.fanfare.dto.message.CreateMessageRequestDto;
+import cc.happybday.fanfare.dto.message.GetMessageResponseDto;
 import cc.happybday.fanfare.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,5 +19,11 @@ public class MessageController {
     public BaseResponse<Long> createMessage(@RequestBody CreateMessageRequestDto request) {
         Long messageId = messageService.saveMessage(request);
         return new BaseResponse<>(messageId, BaseResponseCode.SUCCESS);
+    }
+
+    @GetMapping("/message/{id}")
+    public BaseResponse<GetMessageResponseDto> readMessage(@PathVariable Long id) {
+        GetMessageResponseDto message = messageService.readMessage(id);
+        return new BaseResponse<>(message, BaseResponseCode.SUCCESS);
     }
 }

@@ -4,6 +4,7 @@ import cc.happybday.fanfare.common.exception.BusinessException;
 import cc.happybday.fanfare.domain.Member;
 import cc.happybday.fanfare.domain.Message;
 import cc.happybday.fanfare.dto.message.CreateMessageRequestDto;
+import cc.happybday.fanfare.dto.message.GetMessageResponseDto;
 import cc.happybday.fanfare.repository.MemberRepository;
 import cc.happybday.fanfare.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.MEMBER_NOT_FOUND;
+import static cc.happybday.fanfare.common.response.ErrorResponseCode.MESSAGE_NOT_FOUND;
 
 @Service
 @Transactional
@@ -32,5 +36,16 @@ public class MessageService {
 
         return savedMessage.getId();
     }
+
+    public GetMessageResponseDto readMessage(Long messageId) {
+        Message message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new BusinessException(MESSAGE_NOT_FOUND));
+        Long beforeMessageId = messageRepository.findBeforeMessageId(message.getMember().getId(), messageId)
+                .orElse(0L);
+        Long nextMessageId = messageRepository.findNextMessageId(message.getMember().getId(), messageId)
+                .orElse(0L);
+        return GetMessageResponseDto.toDto(message, beforeMessageId, nextMessageId);
+    }
+
 
 }

@@ -13,7 +13,10 @@ public enum ErrorResponseCode {
 
     // Member
     DUPLICATE_MEMBER_ID("F04", "이미 존재하는 아이디입니다.", HttpStatus.BAD_REQUEST.value()),
-    MEMBER_NOT_FOUND("F05", "회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST.value());
+    MEMBER_NOT_FOUND("F05", "회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
+
+    // Message
+    MESSAGE_NOT_FOUND("F06", "회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value());
 
 
     private final String code;
