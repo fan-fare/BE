@@ -1,12 +1,13 @@
 package cc.happybday.fanfare.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Setter @Getter
+@Getter
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Message {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
