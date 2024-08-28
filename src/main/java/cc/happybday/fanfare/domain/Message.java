@@ -11,7 +11,6 @@ import lombok.*;
 public class Message {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
     private Long id;
 
     @ManyToOne
