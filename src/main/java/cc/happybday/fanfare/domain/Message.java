@@ -29,7 +29,6 @@ public class Message {
     @Column(nullable = false)
     private CandleColor candleColor;
 
-    @Column(nullable = false)
     private LocalDate createdAt;
 
 }
