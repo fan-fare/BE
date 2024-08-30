@@ -20,4 +20,11 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     @Query("SELECT MIN(m.id) FROM Message m WHERE m.member.id = :memberId AND m.id > :messageId")
     Optional<Long> findNextMessageId(@Param("memberId") Long memberId, @Param("messageId") Long messageId);
 
+    Optional<Long> countAllByMember_Id(Long memberId);
+
+    @Query("SELECT COUNT(m) + 1 " +
+            "FROM Message m " +
+            "WHERE m.member.id = :memberId AND m.id < :messageId")
+    Optional<Long> findMessagePosition(@Param("memberId") Long memberId, @Param("messageId") Long messageId);
+
 }

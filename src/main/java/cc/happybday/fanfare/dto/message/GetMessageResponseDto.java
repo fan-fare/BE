@@ -8,6 +8,8 @@ import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 public class GetMessageResponseDto {
@@ -16,15 +18,23 @@ public class GetMessageResponseDto {
     private CandleColor candleColor;
     private Long beforeMessageId;
     private Long nextMessageId;
+    private LocalDate createdAt;
+    private Long totalCount;
+    private Long currentCount;
 
 
-    public static GetMessageResponseDto toDto(Message message, Long beforeMessageId, Long nextMessageId){
+
+    public static GetMessageResponseDto toDto(Message message, Long beforeMessageId, Long nextMessageId, Long totalCount, Long currentCount){
         return GetMessageResponseDto.builder()
                 .content(message.getContent())
                 .nickname(message.getNickname())
                 .candleColor(message.getCandleColor())
                 .beforeMessageId(beforeMessageId)
                 .nextMessageId(nextMessageId)
+                .createdAt(message.getCreatedAt())
+                .totalCount(totalCount)
+                .currentCount(currentCount)
                 .build();
     }
+
 }

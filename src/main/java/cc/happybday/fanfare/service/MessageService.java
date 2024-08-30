@@ -44,7 +44,11 @@ public class MessageService {
                 .orElse(0L);
         Long nextMessageId = messageRepository.findNextMessageId(message.getMember().getId(), messageId)
                 .orElse(0L);
-        return GetMessageResponseDto.toDto(message, beforeMessageId, nextMessageId);
+        Long totalCount = messageRepository.countAllByMember_Id(message.getMember().getId())
+                .orElseThrow(() -> new BusinessException(MESSAGE_NOT_FOUND));
+        Long currentCount = messageRepository.findMessagePosition(message.getMember().getId(), messageId)
+                .orElseThrow(() -> new BusinessException(MESSAGE_NOT_FOUND));
+        return GetMessageResponseDto.toDto(message, beforeMessageId, nextMessageId, totalCount, currentCount);
     }
 
 
