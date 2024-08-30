@@ -3,6 +3,8 @@ package cc.happybday.fanfare.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -25,5 +27,7 @@ public class Message {
 
     @Enumerated(value = EnumType.STRING)
     private CandleColor candleColor;
+
+    private LocalDate createdAt;
 
 }

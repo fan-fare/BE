@@ -5,12 +5,15 @@ import cc.happybday.fanfare.domain.Member;
 import cc.happybday.fanfare.domain.Message;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 public class CreateMessageRequestDto {
     private Long memberId;
     private CandleColor color;
     private String content;
     private String nickname;
+    private LocalDate createdAt;
 
     public Message toMessage(Member member) {
         return Message.builder()
@@ -18,6 +21,7 @@ public class CreateMessageRequestDto {
                 .candleColor(this.color)
                 .content(this.content)
                 .nickname(this.nickname)
+                .createdAt(LocalDate.now())
                 .build();
     }
 }
