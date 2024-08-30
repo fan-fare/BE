@@ -17,7 +17,4 @@ public class Cake {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(value = EnumType.STRING)
-    private CakeColor cakeColor;
-
 }
