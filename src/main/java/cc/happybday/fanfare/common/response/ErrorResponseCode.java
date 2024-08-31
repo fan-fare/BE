@@ -11,9 +11,6 @@ public enum ErrorResponseCode {
     ENTITY_NOT_FOUND("F02", "리소스를 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
     INTERNAL_SERVER_ERROR("F03", "예기치 못한 서버 에러가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR.value()),
 
-    // 입력 형식 관련
-    INVALID_INPUT_FORMAT("F08", "유효하지 않은 형식의 입력입니다.", HttpStatus.BAD_REQUEST.value()),
-
     // Member
     DUPLICATE_USERNAME("F04", "이미 존재하는 username입니다.", HttpStatus.BAD_REQUEST.value()),
     MEMBER_NOT_FOUND("F05", "회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
