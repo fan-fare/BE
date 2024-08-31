@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static cc.happybday.fanfare.common.response.ErrorResponseCode.DUPLICATE_MEMBER_ID;
+import static cc.happybday.fanfare.common.response.ErrorResponseCode.DUPLICATE_USERNAME;
 
 @Service
 @Transactional
@@ -31,8 +31,8 @@ public class MemberService {
     public Long signUp(SignUpRequestDto request){
 
         if (isUsernameExists(request.getUsername())) {
-            log.info("회원가입 실패 (중복된 아이디) : {}", request.getUsername());
-            throw new BusinessException(DUPLICATE_MEMBER_ID);
+            log.info("회원가입 실패 (중복된 username) : {}", request.getUsername());
+            throw new BusinessException(DUPLICATE_USERNAME);
         }
 
         Member member = Member.builder()
