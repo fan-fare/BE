@@ -67,17 +67,22 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication){
 
-        String username = authentication.getName();
-        if (username == null) {
+        String username;
+        try{
+            username = authentication.getName();
+        }catch (Exception e){
             throw new BusinessException(MEMBER_NOT_FOUND);
         }
 
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
-        GrantedAuthority auth = iterator.next();
-        String role = auth.getAuthority();
-        if (role == null)
+        String role;
+        try{
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+            Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
+            GrantedAuthority auth = iterator.next();
+            role = auth.getAuthority();
+        }catch (Exception e){
             throw new BusinessException(MEMBER_ROLE_NOT_FOUND);
+        }
 
         String token = jwtUtil.createJwt(username, role, 60*60*10L); // 유효시간은 임의로 36,000초인 10시간으로 지정
 
