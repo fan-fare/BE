@@ -27,4 +27,6 @@ public class Member {
     @Column(nullable = false)
     private LocalDate birthDay;
 
+    private Role role;
+
 }
