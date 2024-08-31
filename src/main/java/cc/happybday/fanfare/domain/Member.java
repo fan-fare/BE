@@ -1,5 +1,6 @@
 package cc.happybday.fanfare.domain;
 
+import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class Member {
     @Column(nullable = false)
     private LocalDate birthDay;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
 }
