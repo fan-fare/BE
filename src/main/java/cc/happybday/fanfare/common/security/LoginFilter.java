@@ -93,8 +93,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     // 로그인 실패 시 자동 호출되어 실행되는 메서드
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed){
-        // 실패 처리 로직 구현
-        System.out.println("실패~~~~~");
+        throw new BusinessException(UNAUTHORIZED_MEMBER);
     }
 
 }
