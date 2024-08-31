@@ -13,7 +13,7 @@ import static cc.happybday.fanfare.common.response.ErrorResponseCode.MEMBER_ROLE
 
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    private final Member member;
+    private final AuthenticatedMemberDto member;
 
     // role 반환
     @Override
@@ -23,7 +23,7 @@ public class CustomUserDetails implements UserDetails {
             @Override
             public String getAuthority() {
                 if (member.getRole().toString() != null)
-                    return member.getRole().toString();
+                    return member.getRole().name();
                 else
                     throw new BusinessException(MEMBER_ROLE_NOT_FOUND);
             }

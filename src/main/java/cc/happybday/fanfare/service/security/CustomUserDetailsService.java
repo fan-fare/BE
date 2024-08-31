@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.MEMBER_NOT_FOUND;
+import static cc.happybday.fanfare.dto.security.AuthenticatedMemberDto.memberToDto;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         Member member = memberRepository.findByUsername(username)
                 .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
 
-        return new CustomUserDetails(member);
-
+        return new CustomUserDetails(memberToDto(member));
     }
 
 }
