@@ -17,11 +17,11 @@ public enum ErrorResponseCode {
     // Member
     DUPLICATE_MEMBER_ID("F04", "이미 존재하는 아이디입니다.", HttpStatus.BAD_REQUEST.value()),
     MEMBER_NOT_FOUND("F05", "회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
-    MEMBER_ROLE_NOT_FOUND("F05", "회원의 ROLE 값을 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
+    MEMBER_ROLE_NOT_FOUND("F06", "회원의 ROLE 값을 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
 
 
     // Message
-    MESSAGE_NOT_FOUND("F06", "회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value());
+    MESSAGE_NOT_FOUND("F07", "회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value());
 
 
     private final String code;
