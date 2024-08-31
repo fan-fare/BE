@@ -2,6 +2,7 @@ package cc.happybday.fanfare.service;
 
 import cc.happybday.fanfare.common.exception.BusinessException;
 import cc.happybday.fanfare.domain.Member;
+import cc.happybday.fanfare.domain.Role;
 import cc.happybday.fanfare.dto.member.SignUpRequestDto;
 import cc.happybday.fanfare.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ public class MemberService {
                 .nickname(request.getNickname())
                 .password(bCryptPasswordEncoder.encode(request.getPassword()))
                 .birthDay(request.getBirthDay())
+                .role(Role.USER)
                 .build();
 
         Member savedMember = memberRepository.save(member);
