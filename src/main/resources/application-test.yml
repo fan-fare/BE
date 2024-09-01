@@ -13,3 +13,5 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+  jwt:
+    secret: ${JWT_SECRET_KEY}
