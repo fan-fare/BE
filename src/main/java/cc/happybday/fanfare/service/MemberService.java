@@ -64,4 +64,10 @@ public class MemberService {
                 .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     }
 
+    public String getNickname(Long memberId) {
+        return memberRepository.findById(memberId)
+                .map(Member::getNickname)
+                .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
+    }
+
 }

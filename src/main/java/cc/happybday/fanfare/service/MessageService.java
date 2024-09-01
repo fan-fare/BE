@@ -9,11 +9,14 @@ import cc.happybday.fanfare.repository.MemberRepository;
 import cc.happybday.fanfare.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.*;
 
@@ -72,5 +75,18 @@ public class MessageService {
         return "메세지 삭제에 성공했습니다.";
     }
 
+    public List<Long> getMessageIdList(Long memberId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Message> messagePage = messageRepository.findAllByMember_IdOrderByCreatedAtAsc(memberId, pageable);
+
+        return messagePage.stream()
+                .map(Message::getId)
+                .toList();
+    }
+
+    public Long getMessageTotalCount(Long memberId){
+        return messageRepository.countAllByMember_Id(memberId)
+                .orElseThrow(() -> new BusinessException(MESSAGE_NOT_FOUND));
+    }
 
 }
