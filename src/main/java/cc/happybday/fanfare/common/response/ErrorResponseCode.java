@@ -19,7 +19,7 @@ public enum ErrorResponseCode {
     FORBIDDEN_ACCESS("F07", "이 리소스에 접근할 권한이 없습니다.", HttpStatus.FORBIDDEN.value()),
 
     // Message
-    MESSAGE_NOT_FOUND("F08", "회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value());
+    MESSAGE_NOT_FOUND("F08", "메세지를 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value());
 
 
     private final String code;
