@@ -12,10 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.Optional;
 
-import static cc.happybday.fanfare.common.response.ErrorResponseCode.MEMBER_NOT_FOUND;
-import static cc.happybday.fanfare.common.response.ErrorResponseCode.MESSAGE_NOT_FOUND;
+import static cc.happybday.fanfare.common.response.ErrorResponseCode.*;
 
 @Service
 @Transactional
@@ -25,6 +25,7 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     public Long saveMessage(CreateMessageRequestDto request) {
         Long memberId = request.getMemberId();
@@ -38,8 +39,14 @@ public class MessageService {
     }
 
     public GetMessageResponseDto readMessage(Long messageId) {
+
         Message message = messageRepository.findById(messageId)
                 .orElseThrow(() -> new BusinessException(MESSAGE_NOT_FOUND));
+
+        if (!Objects.equals(message.getMember().getId(), memberService.getCurrentMember().getId())) {
+            throw new BusinessException(FORBIDDEN_ACCESS);
+        }
+
         Long beforeMessageId = messageRepository.findBeforeMessageId(message.getMember().getId(), messageId)
                 .orElse(0L);
         Long nextMessageId = messageRepository.findNextMessageId(message.getMember().getId(), messageId)
