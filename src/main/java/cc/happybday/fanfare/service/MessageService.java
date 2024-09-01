@@ -58,5 +58,19 @@ public class MessageService {
         return GetMessageResponseDto.toDto(message, beforeMessageId, nextMessageId, totalCount, currentCount);
     }
 
+    public String deleteMessage(Long messageId) {
+
+        Message message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new BusinessException(MESSAGE_NOT_FOUND));
+
+        if (!Objects.equals(message.getMember().getId(), memberService.getCurrentMember().getId())) {
+            throw new BusinessException(FORBIDDEN_ACCESS);
+        }
+
+        messageRepository.deleteById(message.getId());
+
+        return "메세지 삭제에 성공했습니다.";
+    }
+
 
 }

@@ -26,4 +26,10 @@ public class MessageController {
         GetMessageResponseDto message = messageService.readMessage(id);
         return new BaseResponse<>(message, BaseResponseCode.SUCCESS);
     }
+
+    @DeleteMapping("/message/{id}")
+    public BaseResponse<String> deleteMessage(@PathVariable Long id) {
+        String response = messageService.deleteMessage(id);
+        return new BaseResponse<>(response, BaseResponseCode.SUCCESS);
+    }
 }

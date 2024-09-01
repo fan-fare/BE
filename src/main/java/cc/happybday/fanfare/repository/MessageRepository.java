@@ -12,6 +12,9 @@ import java.util.Optional;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     Optional<Message> findById(Long id);
+
+    void deleteById(Long id);
+
     Message save(Message message);
 
     @Query("SELECT MAX(m.id) FROM Message m WHERE m.member.id = :memberId AND m.id < :messageId")
