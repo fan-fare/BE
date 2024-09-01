@@ -7,11 +7,18 @@ import cc.happybday.fanfare.dto.member.SignUpRequestDto;
 import cc.happybday.fanfare.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.DUPLICATE_USERNAME;
+import static cc.happybday.fanfare.common.response.ErrorResponseCode.MEMBER_NOT_FOUND;
 
 @Service
 @Transactional
@@ -48,6 +55,13 @@ public class MemberService {
         log.info("회원가입 완료: {}", savedMember.getUsername());
 
         return savedMember.getId();
+    }
+
+
+    public Member getCurrentMember() throws BusinessException {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return memberRepository.findByUsername(username)
+                .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     }
 
 }
