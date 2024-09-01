@@ -4,10 +4,11 @@ import cc.happybday.fanfare.domain.CandleColor;
 import cc.happybday.fanfare.domain.Member;
 import cc.happybday.fanfare.domain.Message;
 import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
 public class CreateMessageRequestDto {
     private Long memberId;
     private CandleColor color;

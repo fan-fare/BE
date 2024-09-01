@@ -3,7 +3,7 @@ package cc.happybday.fanfare.dto.member;
 import lombok.Data;
 import lombok.Getter;
 
-@Data
+@Getter
 public class LoginDto {
     private String username;
     private String password;
