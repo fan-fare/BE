@@ -25,14 +25,27 @@ public class AutoService {
     @Scheduled(cron = "0 0 0 * * *")
     public void autoDelete() throws Exception {
         LocalDate sevenDaysAgo = LocalDate.now().minusDays(7);
-        List<Member> members = memberRepository.findByBirthDay(sevenDaysAgo);
+        processMembersByBirthday(sevenDaysAgo);
+    }
+
+    private void processMembersByBirthday(LocalDate sevenDaysAgo) {
+        int month = sevenDaysAgo.getMonthValue();
+        int day = sevenDaysAgo.getDayOfMonth();
+
+        List<Member> members = memberRepository.findByBirthDay(month, day);
+
         if (members.isEmpty()) {
-            log.info("7일전 날짜에 생일인 회원이 없습니다.");
-        }
-        for (Member member : members) {
-            messageRepository.deleteAllByMember(member);
-            memberRepository.deleteById(member.getId());
+            log.info("7일전 생일인 회원이 없습니다. : {}월 {}일 기준", month, day);
+        } else {
+            members.forEach(this::deleteMemberData);
         }
     }
+
+    private void deleteMemberData(Member member) {
+        messageRepository.deleteAllByMember(member);
+        memberRepository.deleteById(member.getId());
+        log.info("7일전 생일인 회원의 데이터를 삭제했습니다.");
+    }
+
 
 }
