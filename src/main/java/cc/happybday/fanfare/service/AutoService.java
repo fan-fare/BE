@@ -22,8 +22,7 @@ public class AutoService {
     private final MessageRepository messageRepository;
 
 
-//    @Scheduled(cron = "0 0 0 * * *")
-    @Scheduled(cron = "0/30 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void autoDelete() throws Exception {
         LocalDate sevenDaysAgo = LocalDate.now().minusDays(7);
         processMembersByBirthday(sevenDaysAgo);
