@@ -27,9 +27,12 @@ https://www.happybday.cc/
 | **Framework**       | Spring Boot 3.3.2, Gradle                                                                                                                 |
 | **Authentication**  | Spring Security 6, JSON Web Tokens                                                                                                        |
 | **ORM**             | Spring Data JPA                                                                                                                           |
+| **Scheduling**      | Spring Scheduler                                                                                                                          |
 | **Database**        | MySQL                                                                                                                                     |
-| **External**        | AWS EC2, AWS RDS                                                                                                                          |
-| **Other Tools**     | Notion, Discord, Postman, Figma                                                                                                           |
+| **Deployment**      | AWS EC2, AWS RDS                                                                                                                          |
+| **Other Tools**     | Notion, Discord, Postman, Figma
+
+
 
 <br><br>
 ## 주요 기능
@@ -37,6 +40,7 @@ https://www.happybday.cc/
 - **회원 관리**: 회원가입, 로그인, 아이디 중복 확인 기능
 - **생일 축하 메시지 관리**: 모든 사용자에 대해 메시지 작성 기능, 생일자에 대해 조회, 삭제 기능
 - **케이크 관리**: 사용자별 생일 케이크와 연동된 메시지 조회
+- **자동 메시지 및 회원 삭제**: 스프링 스케줄러를 사용하여 생일 7일 이후 해당 사용자의 메시지와 회원 엔티티 자동 삭제 기능
 
 <br><br>
 ## 디렉토리 구조
