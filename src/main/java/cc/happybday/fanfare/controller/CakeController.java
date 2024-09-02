@@ -1,5 +1,7 @@
 package cc.happybday.fanfare.controller;
 
+import cc.happybday.fanfare.common.response.BaseResponse;
+import cc.happybday.fanfare.common.response.BaseResponseCode;
 import cc.happybday.fanfare.domain.Member;
 import cc.happybday.fanfare.dto.cake.CakeResponseDto;
 import cc.happybday.fanfare.service.MemberService;
@@ -18,19 +20,20 @@ public class CakeController {
     private final MessageService messageService;
 
     @GetMapping("/cake/{memberId}")
-    public CakeResponseDto mainCake(@PathVariable Long memberId,
-                                    @RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "5") int size) {
+    public BaseResponse<CakeResponseDto> mainCake(@PathVariable Long memberId,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "5") int size) {
 
         Long totalMessageCount = messageService.getMessageTotalCount(memberId);
         Long totalCakeCount = (long) Math.ceil((double) totalMessageCount / size);
         Member member = memberService.getMember(memberId);
-        return CakeResponseDto.builder()
+        CakeResponseDto reponse = CakeResponseDto.builder()
                 .totalCakeCount(totalCakeCount)
                 .totalMessageCount(totalMessageCount)
                 .messageIdList(messageService.getMessageIdList(memberId, page, size))
                 .nickname(member.getNickname())
                 .birthDay(member.getBirthDay())
                 .build();
+        return new BaseResponse<>(reponse, BaseResponseCode.SUCCESS);
     }
 }
