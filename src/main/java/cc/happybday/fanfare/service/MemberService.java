@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -64,9 +65,8 @@ public class MemberService {
                 .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     }
 
-    public String getNickname(Long memberId) {
+    public Member getMember(Long memberId) {
         return memberRepository.findById(memberId)
-                .map(Member::getNickname)
                 .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     }
 
