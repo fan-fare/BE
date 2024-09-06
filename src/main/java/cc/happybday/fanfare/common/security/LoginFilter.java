@@ -5,6 +5,7 @@ import cc.happybday.fanfare.common.response.CustomErrorResponder;
 import cc.happybday.fanfare.common.response.ErrorResponseCode;
 import cc.happybday.fanfare.domain.Role;
 import cc.happybday.fanfare.dto.member.LoginDto;
+import cc.happybday.fanfare.dto.security.CustomUserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -73,6 +74,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         try {
             String username = authentication.getName();
+            Long memberId = ((CustomUserDetails) authentication.getPrincipal()).getMemberId();
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
 
@@ -85,7 +87,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             response.setStatus(HttpStatus.OK.value());
             response.setContentType("application/json; charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("{\"message\":\"로그인에 성공했습니다.\"}");
+            String jsonResponse = String.format("{\"message\":\"로그인에 성공했습니다.\", \"memberId\":%d}", memberId);
+            response.getWriter().write(jsonResponse);
 
         } catch (Exception e) {
             CustomErrorResponder.sendErrorResponse(response, INVALID_INPUT_VALUE);
