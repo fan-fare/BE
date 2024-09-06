@@ -1,8 +1,11 @@
 package cc.happybday.fanfare.service;
 
 import cc.happybday.fanfare.common.exception.BusinessException;
+import cc.happybday.fanfare.domain.Cake;
+import cc.happybday.fanfare.domain.CandleColor;
 import cc.happybday.fanfare.domain.Member;
 import cc.happybday.fanfare.domain.Message;
+import cc.happybday.fanfare.dto.cake.CakeResponseDto;
 import cc.happybday.fanfare.dto.message.CreateMessageRequestDto;
 import cc.happybday.fanfare.dto.message.GetMessageResponseDto;
 import cc.happybday.fanfare.repository.MemberRepository;
@@ -84,9 +87,44 @@ public class MessageService {
                 .toList();
     }
 
+    public List<String> getMessageSenderNicknameList(Long memberId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Message> messagePage = messageRepository.findAllByMember_IdOrderByCreatedAtAsc(memberId, pageable);
+
+        return messagePage.stream()
+                .map(Message::getNickname)
+                .toList();
+    }
+
+    public List<CandleColor> getCandleColorsList(Long memberId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Message> messagePage = messageRepository.findAllByMember_IdOrderByCreatedAtAsc(memberId, pageable);
+
+        return messagePage.stream()
+                .map(Message::getCandleColor)
+                .toList();
+    }
+
     public Long getMessageTotalCount(Long memberId){
         return messageRepository.countAllByMember_Id(memberId)
                 .orElseThrow(() -> new BusinessException(MESSAGE_NOT_FOUND));
+    }
+
+    public CakeResponseDto getCake(Member member, int page, int size){
+        Long totalMessageCount = getMessageTotalCount(member.getId());
+        Long totalCakeCount = (long) Math.ceil((double) totalMessageCount / size);
+        List<Long> messageIdList = getMessageIdList(member.getId(), page, size);
+        List<String> messageSenderNicknameList = getMessageSenderNicknameList(member.getId(), page, size);
+        List<CandleColor> candleColorsList = getCandleColorsList(member.getId(), page, size);
+        return CakeResponseDto.builder()
+                .totalCakeCount(totalCakeCount)
+                .nickname(member.getNickname())
+                .birthDay(member.getBirthDay())
+                .totalMessageCount(totalMessageCount)
+                .messageIdList(messageIdList)
+                .messageSenderNicknameList(messageSenderNicknameList)
+                .candleColorsList(candleColorsList)
+                .build();
     }
 
 }
