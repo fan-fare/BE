@@ -26,7 +26,7 @@ public class CakeController {
 
         Long totalMessageCount = messageService.getMessageTotalCount(memberId);
         Long totalCakeCount = (long) Math.ceil((double) totalMessageCount / size);
-        Member member = memberService.getMember(memberId);
+        Member member = memberService.getMemberById(memberId);
         CakeResponseDto reponse = CakeResponseDto.builder()
                 .totalCakeCount(totalCakeCount)
                 .totalMessageCount(totalMessageCount)
