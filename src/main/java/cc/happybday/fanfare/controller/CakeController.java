@@ -23,17 +23,8 @@ public class CakeController {
     public BaseResponse<CakeResponseDto> mainCake(@PathVariable Long memberId,
                                                   @RequestParam(defaultValue = "0") int page,
                                                   @RequestParam(defaultValue = "5") int size) {
-
-        Long totalMessageCount = messageService.getMessageTotalCount(memberId);
-        Long totalCakeCount = (long) Math.ceil((double) totalMessageCount / size);
-        Member member = memberService.getMember(memberId);
-        CakeResponseDto reponse = CakeResponseDto.builder()
-                .totalCakeCount(totalCakeCount)
-                .totalMessageCount(totalMessageCount)
-                .messageIdList(messageService.getMessageIdList(memberId, page, size))
-                .nickname(member.getNickname())
-                .birthDay(member.getBirthDay())
-                .build();
-        return new BaseResponse<>(reponse, BaseResponseCode.SUCCESS);
+        Member member = memberService.getMemberById(memberId);
+        CakeResponseDto response = messageService.getCake(member, page, size);
+        return new BaseResponse<>(response, BaseResponseCode.SUCCESS);
     }
 }

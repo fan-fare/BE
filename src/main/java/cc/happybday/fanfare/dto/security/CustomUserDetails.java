@@ -15,6 +15,10 @@ import static cc.happybday.fanfare.common.response.ErrorResponseCode.MEMBER_ROLE
 public class CustomUserDetails implements UserDetails {
     private final AuthenticatedMemberDto member;
 
+    public Long getMemberId() {
+        return member.getMemberId();
+    }
+
     // role 반환
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

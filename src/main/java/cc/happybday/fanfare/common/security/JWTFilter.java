@@ -1,9 +1,10 @@
 package cc.happybday.fanfare.common.security;
 
-import cc.happybday.fanfare.domain.Member;
+import cc.happybday.fanfare.common.response.ErrorResponseCode;
 import cc.happybday.fanfare.domain.Role;
 import cc.happybday.fanfare.dto.security.AuthenticatedMemberDto;
 import cc.happybday.fanfare.dto.security.CustomUserDetails;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import cc.happybday.fanfare.common.response.CustomErrorResponder;
+
 
 import java.io.IOException;
 
@@ -36,11 +39,18 @@ public class JWTFilter extends OncePerRequestFilter {
         // Bearer 제거 후 순수 토큰 추출
         String token = authorization.split(" ")[1];
 
-        if (jwtUtil.isExpired(token)) {
-            System.out.printf("token expired");
-            filterChain.doFilter(request, response);
+        try {
+            // 토큰이 만료되었는지 확인
+            if (jwtUtil.isExpired(token)) {
+                System.out.printf("token expired");
+                throw new ExpiredJwtException(null, null, "Token expired");
+            }
+        } catch (ExpiredJwtException e) {
+            CustomErrorResponder.sendErrorResponse(response, ErrorResponseCode.TOKEN_EXPIRED);
             return;
         }
+
+
 
         // 토큰에서 usename 과 role 추출
         String username = jwtUtil.getUsername(token);

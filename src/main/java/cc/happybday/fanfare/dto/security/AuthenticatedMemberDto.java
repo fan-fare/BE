@@ -8,12 +8,14 @@ import lombok.Getter;
 @Builder
 @Getter
 public class AuthenticatedMemberDto {
+    Long memberId;
     String username;
     String password;
     Role role;
 
     public static AuthenticatedMemberDto memberToDto(Member member) {
         return AuthenticatedMemberDto.builder()
+                .memberId(member.getId())
                 .username(member.getUsername())
                 .password(member.getPassword())
                 .role(member.getRole())
