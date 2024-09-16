@@ -52,7 +52,11 @@ public class SecurityConfig {
                         CorsConfiguration configuration = new CorsConfiguration();
 
                         // 허용할 Origin 설정
-                        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://happybday.cc/"));
+                        configuration.setAllowedOrigins(Arrays.asList(
+                                "https://happybday.cc",
+                                "https://api.happybday.cc",
+                                "http://localhost:3000"
+                        ));
 
                         // 허용할 HTTP 메서드 설정 - 모든 메서드(GET, POST, PUT, DELETE 등) 허용
                         configuration.setAllowedMethods(Collections.singletonList("*"));
