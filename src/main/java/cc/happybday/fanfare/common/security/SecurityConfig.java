@@ -53,7 +53,7 @@ public class SecurityConfig {
 
                         // 허용할 Origin 설정
                         configuration.setAllowedOrigins(Arrays.asList(
-                                "https://happybday.cc",
+                                "https://www.happybday.cc",
                                 "https://api.happybday.cc",
                                 "http://localhost:3000"
                         ));
