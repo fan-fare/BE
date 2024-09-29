@@ -27,5 +27,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findByBirthDay(@Param("month") int month, @Param("day") int day);
     void deleteById(Long id);
 
-    List<Member> findAllByUuidIsNull();
 }
