@@ -36,6 +36,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     Optional<Long> findMessagePosition(@Param("memberId") Long memberId, @Param("messageId") Long messageId);
 
     Page<Message> findAllByMember_IdOrderByCreatedAtAsc(Long memberId, Pageable pageable);
+    List<Message> findAllByMember_IdOrderByCreatedAtAsc(Long memberId);
 
     void deleteAllByMember(Member member);
 

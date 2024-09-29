@@ -20,6 +20,7 @@ public enum ErrorResponseCode {
 
     // Message,
     MESSAGE_NOT_FOUND("F09", "메세지를 찾을 수 없습니다.", HttpStatus.NOT_FOUND.value()),
+    INVALID_MESSAGE_INDEX("F11", "유효하지 않은 메시지 인덱스 값입니다.", HttpStatus.BAD_REQUEST.value()),
 
     // token
     TOKEN_EXPIRED("F10", "토큰이 만료되었습니다.", HttpStatus.UNAUTHORIZED.value());
