@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class Member {
 
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    @Column(columnDefinition = "VARCHAR(36)", updatable = false, nullable = false, unique = true)
+    @Column(columnDefinition = "VARCHAR(36)", updatable = true, nullable = true, unique = true)
     private UUID uuid;
 
     @Column(length = 20, nullable = false)
