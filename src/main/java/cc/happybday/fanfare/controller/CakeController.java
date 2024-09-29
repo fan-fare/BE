@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 public class CakeController {
@@ -19,11 +21,11 @@ public class CakeController {
     private final MemberService memberService;
     private final MessageService messageService;
 
-    @GetMapping("/cake/{memberId}")
-    public BaseResponse<CakeResponseDto> mainCake(@PathVariable Long memberId,
+    @GetMapping("/cake/{memberUuid}")
+    public BaseResponse<CakeResponseDto> mainCake(@PathVariable UUID memberUuid,
                                                   @RequestParam(defaultValue = "0") int page,
                                                   @RequestParam(defaultValue = "5") int size) {
-        Member member = memberService.getMemberById(memberId);
+        Member member = memberService.getMemberByUuid(memberUuid);
         CakeResponseDto response = messageService.getCake(member, page, size);
         return new BaseResponse<>(response, BaseResponseCode.SUCCESS);
     }

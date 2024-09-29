@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.MEMBER_ROLE_NOT_FOUND;
 
@@ -17,6 +18,9 @@ public class CustomUserDetails implements UserDetails {
 
     public Long getMemberId() {
         return member.getMemberId();
+    }
+    public UUID getMemberUuid() {
+        return member.getMemberUuid();
     }
 
     // role 반환

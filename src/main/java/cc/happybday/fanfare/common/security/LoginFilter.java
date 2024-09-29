@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.UUID;
 
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.*;
 
@@ -74,7 +75,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         try {
             String username = authentication.getName();
-            Long memberId = ((CustomUserDetails) authentication.getPrincipal()).getMemberId();
+            UUID memberUuid = ((CustomUserDetails) authentication.getPrincipal()).getMemberUuid();
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
 
@@ -87,7 +88,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             response.setStatus(HttpStatus.OK.value());
             response.setContentType("application/json; charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
-            String jsonResponse = String.format("{\"message\":\"로그인에 성공했습니다.\", \"memberId\":%d}", memberId);
+            String jsonResponse = String.format("{\"message\":\"로그인에 성공했습니다.\", \"memberUuid\":\"%s\"}", memberUuid.toString());
             response.getWriter().write(jsonResponse);
 
         } catch (Exception e) {

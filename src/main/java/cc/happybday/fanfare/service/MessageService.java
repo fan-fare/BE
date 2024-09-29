@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.*;
 
@@ -34,8 +35,7 @@ public class MessageService {
     private final MemberService memberService;
 
     public Long saveMessage(CreateMessageRequestDto request) {
-        Long memberId = request.getMemberId();
-        Member member = memberRepository.findById(memberId)
+        Member member = memberRepository.findByUuid(request.getMemberUuid())
                 .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
 
         Message message = request.toMessage(member);

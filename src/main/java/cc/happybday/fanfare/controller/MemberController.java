@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
@@ -23,9 +25,9 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public BaseResponse<Long> signUp(@RequestBody SignUpRequestDto signUpRequestDto) {
-        Long memberId = memberService.signUp(signUpRequestDto);
-        return new BaseResponse<>(memberId, BaseResponseCode.SUCCESS);
+    public BaseResponse<String> signUp(@RequestBody SignUpRequestDto signUpRequestDto) {
+        String memberUuid = memberService.signUp(signUpRequestDto).toString();
+        return new BaseResponse<>(memberUuid, BaseResponseCode.SUCCESS);
     }
 
     @GetMapping("/me")

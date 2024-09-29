@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.DUPLICATE_USERNAME;
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.MEMBER_NOT_FOUND;
 
@@ -31,7 +33,7 @@ public class MemberService {
     }
 
     // 회원가입
-    public Long signUp(SignUpRequestDto request){
+    public UUID signUp(SignUpRequestDto request){
 
         if (isUsernameExists(request.getUsername())) {
             log.info("회원가입 실패 (중복된 username) : {}", request.getUsername());
@@ -50,7 +52,7 @@ public class MemberService {
 
         log.info("회원가입 완료: {}", savedMember.getUsername());
 
-        return savedMember.getId();
+        return savedMember.getUuid();
     }
 
 
@@ -64,11 +66,15 @@ public class MemberService {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     }
+    public Member getMemberByUuid(UUID memberUuid) {
+        return memberRepository.findByUuid(memberUuid)
+                .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
+    }
 
     public MemberInfoDto getCurrentMemberInfo() throws BusinessException {
         Member member = getCurrentMember();
         return MemberInfoDto.builder()
-                .memberId(member.getId())
+                .memberUuid(member.getUuid())
                 .username(member.getUsername())
                 .birthDay(member.getBirthDay())
                 .build();

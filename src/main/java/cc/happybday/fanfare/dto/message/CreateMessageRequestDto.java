@@ -7,10 +7,11 @@ import lombok.Data;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 public class CreateMessageRequestDto {
-    private Long memberId;
+    private UUID memberUuid;
     private CandleColor color;
     private String content;
     private String nickname;
