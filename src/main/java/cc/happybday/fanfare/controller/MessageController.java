@@ -21,15 +21,15 @@ public class MessageController {
         return new BaseResponse<>(messageId, BaseResponseCode.SUCCESS);
     }
 
-    @GetMapping("/message/{id}")
-    public BaseResponse<GetMessageResponseDto> readMessage(@PathVariable Long id) {
-        GetMessageResponseDto message = messageService.readMessage(id);
+    @GetMapping("/message/{message_id}")
+    public BaseResponse<GetMessageResponseDto> readMessage(@PathVariable Long message_id) {
+        GetMessageResponseDto message = messageService.readMessage(message_id);
         return new BaseResponse<>(message, BaseResponseCode.SUCCESS);
     }
 
-    @DeleteMapping("/message/{id}")
-    public BaseResponse<String> deleteMessage(@PathVariable Long id) {
-        String response = messageService.deleteMessage(id);
+    @DeleteMapping("/message/{message_id}")
+    public BaseResponse<String> deleteMessage(@PathVariable Long message_id) {
+        String response = messageService.deleteMessage(message_id);
         return new BaseResponse<>(response, BaseResponseCode.SUCCESS);
     }
 }
