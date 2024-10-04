@@ -5,10 +5,7 @@ import cc.happybday.fanfare.domain.CandleColor;
 import cc.happybday.fanfare.domain.Member;
 import cc.happybday.fanfare.domain.Message;
 import cc.happybday.fanfare.dto.cake.CakeResponseDto;
-import cc.happybday.fanfare.dto.message.AllMessageResponseListDto;
-import cc.happybday.fanfare.dto.message.CreateMessageRequestDto;
-import cc.happybday.fanfare.dto.message.GetMessageResponseDto;
-import cc.happybday.fanfare.dto.message.MessageResponseDto;
+import cc.happybday.fanfare.dto.message.*;
 import cc.happybday.fanfare.repository.MemberRepository;
 import cc.happybday.fanfare.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static cc.happybday.fanfare.common.response.ErrorResponseCode.*;
 
@@ -142,21 +140,21 @@ public class MessageService {
                 .orElseThrow(() -> new BusinessException(MESSAGE_NOT_FOUND));
     }
 
-    public CakeResponseDto getCake(Member member, int page, int size){
-        Long totalMessageCount = getMessageTotalCount(member.getId());
-        Long totalCakeCount = (long) Math.ceil((double) totalMessageCount / size);
-        List<Long> messageIdList = getMessageIdList(member.getId(), page, size);
-        List<String> messageSenderNicknameList = getMessageSenderNicknameList(member.getId(), page, size);
-        List<CandleColor> candleColorsList = getCandleColorsList(member.getId(), page, size);
+    public CakeResponseDto getCake(Member member) {
+        List<CakeMessageResponseDto> messageDtos = messageRepository.findAllByMember_IdOrderByCreatedAtAsc(member.getId()).stream()
+                .map(message -> CakeMessageResponseDto.builder()
+                        .messageId(message.getId())
+                        .senderNickname(message.getNickname())
+                        .candleColor(message.getCandleColor())
+                        .build())
+                .collect(Collectors.toList());
+
         return CakeResponseDto.builder()
-                .totalCakeCount(totalCakeCount)
                 .nickname(member.getNickname())
                 .birthDay(member.getBirthDay())
-                .totalMessageCount(totalMessageCount)
-                .messageIdList(messageIdList)
-                .messageSenderNicknameList(messageSenderNicknameList)
-                .candleColorsList(candleColorsList)
+                .messages(messageDtos)
                 .build();
     }
+
 
 }

@@ -22,11 +22,9 @@ public class CakeController {
     private final MessageService messageService;
 
     @GetMapping("/cake/{member_uuid}")
-    public BaseResponse<CakeResponseDto> mainCake(@PathVariable UUID member_uuid,
-                                                  @RequestParam(defaultValue = "0") int page,
-                                                  @RequestParam(defaultValue = "5") int size) {
+    public BaseResponse<CakeResponseDto> mainCake(@PathVariable UUID member_uuid) {
         Member member = memberService.getMemberByUuid(member_uuid);
-        CakeResponseDto response = messageService.getCake(member, page, size);
+        CakeResponseDto response = messageService.getCake(member);
         return new BaseResponse<>(response, BaseResponseCode.SUCCESS);
     }
 }
