@@ -88,8 +88,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(HttpMethod.GET, "/message/*", "/messages").authenticated()
                         .requestMatchers(HttpMethod.DELETE).authenticated()
-                        .requestMatchers(HttpMethod.GET, "/message/*").authenticated()
                         .anyRequest().permitAll()); // 모든 사용자 허용
 
         http
