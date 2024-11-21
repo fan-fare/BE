@@ -1,6 +1,7 @@
 package cc.happybday.fanfare.service;
 
 import cc.happybday.fanfare.domain.Member;
+import cc.happybday.fanfare.domain.Role;
 import cc.happybday.fanfare.repository.MemberRepository;
 import cc.happybday.fanfare.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,10 @@ public class AutoService {
     @Scheduled(cron = "0 0 0 * * *")
     public void autoDelete() throws Exception {
         LocalDate sevenDaysAgo = LocalDate.now().minusDays(7);
-        processMembersByBirthday(sevenDaysAgo);
+        deleteMembersByBirthday(sevenDaysAgo);
     }
 
-    private void processMembersByBirthday(LocalDate sevenDaysAgo) {
+    private void deleteMembersByBirthday(LocalDate sevenDaysAgo) {
         int month = sevenDaysAgo.getMonthValue();
         int day = sevenDaysAgo.getDayOfMonth();
 
@@ -37,7 +38,11 @@ public class AutoService {
         if (members.isEmpty()) {
             log.info("7일전 생일인 회원이 없습니다. : {}월 {}일 기준", month, day);
         } else {
-            members.forEach(this::deleteMemberData);
+            for (Member member : members) {
+                if ( member.getRole().equals(Role.USER)){
+                    deleteMemberData(member);
+                }
+            }
         }
     }
 
