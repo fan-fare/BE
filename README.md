@@ -42,7 +42,7 @@ https://www.happybday.cc/6e4e4b48-78f5-405c-a60c-2f6f3774bcc6 <br>
 | **IDE**             | IntelliJ                                                                                                                                  |
 | **Language**        | Java 17                                                                                                                                   |
 | **Framework**       | Spring Boot 3.3.2, Gradle                                                                                                                 |
-| **Authentication**  | Spring Security 6, JSON Web Tokens                                                                                                        |
+| **Authentication**  | Spring Security 6                                                                                                  |
 | **ORM**             | Spring Data JPA                                                                                                                           |
 | **Scheduling**      | Spring Scheduler                                                                                                                          |
 | **Database**        | MySQL                                                                                                                                     |
